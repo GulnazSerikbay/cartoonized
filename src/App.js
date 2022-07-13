@@ -1,25 +1,75 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import './App.css';
+import Card from './Card'
+import DrawButton from './DrawButton';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      cards: [
+        {code: '404', phrase: 'Not found', description: 'indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists.'}
+        ],
+      currentCard: {}
+    }
+
+    this.updateCard = this.updateCard.bind(this);
+  }
+
+  //this is called a lifecycle hook
+  componentWillMount() {
+    const currentCards = this.state.cards;
+
+    //fetch JSON here!
+    fetch('https://raw.githubusercontent.com/for-GET/know-your-http-well/master/json/status-codes.json')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        data.forEach(function(item) {
+          let desc = item.description;
+          desc = desc.replace(/"/g,"");
+          currentCards.push({code: item.code, phrase: item.phrase, description: desc});
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+
+
+    this.setState({
+      cards: currentCards,
+      currentCard: this.getRandomCard(currentCards)
+    });
+  }
+
+  getRandomCard(currentCards) {
+    let card = currentCards[Math.floor(Math.random() * currentCards.length)];
+    return card;
+  }
+
+  updateCard() {
+    const currentCards = this.state.cards;
+    this.setState({
+      currentCard: this.getRandomCard(currentCards)
+    })
+  }
+
+  render() {
+    return (
+      <div className='App'>
+      <h1>HTTP Status Codes Flashcards</h1>
+        <div className='card-row'> 
+          <Card question={this.state.currentCard.code}
+                answer={this.state.currentCard.phrase}
+                description={this.state.currentCard.description} 
+          />
+        </div>
+        <div className='button-row'>
+          <DrawButton drawCard={this.updateCard} />
+        </div>
+      </div>
+    );
+  }
 }
-
-export default App;
