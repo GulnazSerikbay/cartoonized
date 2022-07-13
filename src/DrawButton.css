@@ -1,13 +1,16 @@
 .button {
-    background-color: #ccc;
+    background-color: rgb(87, 112, 132);
     border: none;
-    color: #353535;
-    margin-top: 30px;
-    padding: 20px 40px;
+    width: 120%;
+    border-radius: 5%;
+    color: #fff;
+    margin-top: 15px;
+    padding: 10px 30px;
     text-align: center;
     text-decoration: none;
     font-size: 1.8em;
     outline: none;
+    margin-left: 30%;
 }
 
 .button:hover {

@@ -5,12 +5,13 @@ import './Card.css';
 const Card = (props) => (
   <div className='card-container'>
     <div className='card'>
-      <div className='front' style={{backgroundImage: `url(${props.image})`}}>
-        <div className='question' ><img src={props.image} alt={props.name}></img>{props.name}</div>
+      <div className='front' style={{backgroundImage: `url("${props.image}")`, backgroundPosition: 'center',
+        backgroundSize: 'cover',}}>
+        <div className='question' >{props.name}</div>
       </div>
       <div className='back'>
-        <div className='answer'>{props.hint}</div>
-        <div className='description'>{props.id}</div>
+        <div className='answer'>HINT: {props.hint}</div>
+        <div className='description'></div>
       </div>
     </div>
   </div>

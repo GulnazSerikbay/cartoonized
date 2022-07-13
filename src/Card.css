@@ -32,16 +32,20 @@
     justify-content: center;
     align-items: center;
     object-fit: fill;
-    
-    
   }
   
   .card .back {
     height: 400px;
     width: 400px;
+    background-color: #333;
+    color: #fff;
     text-align: center;
+    backface-visibility: hidden;
     transform: rotateY(180deg);
-
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    justify-content: center;
   }
   
   .question {
@@ -51,10 +55,9 @@
   }
   
   .answer {
-    color: #333;
+    color: #fff;
     font-size: 3em;
     padding: 10% 10% 0 10%;
-    
     object-fit: fill;
   }
   
