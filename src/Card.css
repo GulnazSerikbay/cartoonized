@@ -31,7 +31,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #353535;
+    object-fit: fill;
+    
+    
   }
   
   .card .back {
@@ -39,18 +41,21 @@
     width: 400px;
     text-align: center;
     transform: rotateY(180deg);
-    background: #ccc;
+
   }
   
   .question {
     color: #fff;
     font-size: 2.3em;
+    display: none;
   }
   
   .answer {
     color: #333;
     font-size: 3em;
     padding: 10% 10% 0 10%;
+    
+    object-fit: fill;
   }
   
   .description {

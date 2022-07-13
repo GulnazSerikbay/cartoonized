@@ -1,75 +1,82 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, { Component, useState } from 'react';
+
 import './App.css';
 import Card from './Card'
 import DrawButton from './DrawButton';
+//import profiles from './profiles';
 
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      cards: [
-        {code: '404', phrase: 'Not found', description: 'indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists.'}
-        ],
-      currentCard: {}
+
+
+//console.log(profiles);
+
+function App()  {
+
+  const list = [
+    {
+        id: "1",
+        name: "Dalida",
+        image: "https://d3grfap2l5ikgv.cloudfront.net/5d6b99d329a6ab50ccbc0bf6/public/5ea743d19bf15e2d300cc224.jpg",
+        hint: "bossin"
+    },
+    {
+        id: "2",
+        name: "Aidar",
+        image: "https://d3grfap2l5ikgv.cloudfront.net/5d6b99d329a6ab50ccbc0bf6/public/5ea743d19bf15e2d300cc224.jpg",
+        hint: "red hat"
+    },
+    {
+        id: "3",
+        name: "Kairosh",
+        image: "https://d3grfap2l5ikgv.cloudfront.net/5d6b99d329a6ab50ccbc0bf6/public/5ea743d19bf15e2d300cc224.jpg",
+        hint: "no heartbreak: translate"
+    },
+    {
+        id: "4",
+        name: "Bauka",
+        image: "https://d3grfap2l5ikgv.cloudfront.net/5d6b99d329a6ab50ccbc0bf6/public/5ea743d19bf15e2d300cc224.jpg",
+        hint: "tuner"
     }
+]
 
-    this.updateCard = this.updateCard.bind(this);
+
+const getRandomCard = () => {
+  let card = cards[Math.floor(Math.random() * cards.length)];
+  return card;
+}
+
+  const [cards, setCards] = useState(list);
+  const [current, setCurrent] = useState(    {
+    id: "1",
+    name: "Dalida",
+    image: "https://d3grfap2l5ikgv.cloudfront.net/5d6b99d329a6ab50ccbc0bf6/public/5ea743d19bf15e2d300cc224.jpg",
+    hint: "bossin"
+});
+
+  /*useEffect(()=>{
+    
+  }*/
+
+
+  const updateCard = () => {
+    setCurrent(getRandomCard())
   }
 
-  //this is called a lifecycle hook
-  componentWillMount() {
-    const currentCards = this.state.cards;
 
-    //fetch JSON here!
-    fetch('https://raw.githubusercontent.com/for-GET/know-your-http-well/master/json/status-codes.json')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        data.forEach(function(item) {
-          let desc = item.description;
-          desc = desc.replace(/"/g,"");
-          currentCards.push({code: item.code, phrase: item.phrase, description: desc});
-        });
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-
-
-    this.setState({
-      cards: currentCards,
-      currentCard: this.getRandomCard(currentCards)
-    });
-  }
-
-  getRandomCard(currentCards) {
-    let card = currentCards[Math.floor(Math.random() * currentCards.length)];
-    return card;
-  }
-
-  updateCard() {
-    const currentCards = this.state.cards;
-    this.setState({
-      currentCard: this.getRandomCard(currentCards)
-    })
-  }
-
-  render() {
     return (
       <div className='App'>
-      <h1>HTTP Status Codes Flashcards</h1>
+      <h1>Guess the person</h1>
         <div className='card-row'> 
-          <Card question={this.state.currentCard.code}
-                answer={this.state.currentCard.phrase}
-                description={this.state.currentCard.description} 
+          <Card image={current.image}
+                name={current.name}
+                id={current.id} 
+                hint={current.hint} 
           />
         </div>
         <div className='button-row'>
-          <DrawButton drawCard={this.updateCard} />
+          <DrawButton drawCard={updateCard} />
         </div>
       </div>
     );
-  }
 }
+
+export default App;
